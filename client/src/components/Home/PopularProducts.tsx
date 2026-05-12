@@ -10,7 +10,7 @@ const PopularProducts = () => {
 
   useEffect(() => {
     setProducts(dummyProducts.slice(0, 10));
-  });
+  },[]);
 
   return (
     <section className="pb-16">
