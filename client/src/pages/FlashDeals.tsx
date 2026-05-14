@@ -15,7 +15,7 @@ const FlashDeals = () => {
     setTimeout(() => {
       setLoading(false);
     }, 1000);
-  });
+  },[]);
 
   return (
     <div className="min-h-screen bg-app-cream">
