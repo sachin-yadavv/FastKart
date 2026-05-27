@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import type { Product } from "../types";
-import { categoriesData, dummyProducts } from "../assets/assets";
+import { categoriesData } from "../assets/assets";
 import { ChevronDown, Home, SlidersHorizontal, XIcon } from "lucide-react";
 import ProductCard from "../components/Home/ProductCard";
 import Loading from "../components/Loading";
 import FilterPanel from "../components/FilterPanel";
+import api from "../config/api";
+import { toast } from "react-hot-toast/headless";
 
 const Products = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -24,12 +26,27 @@ const Products = () => {
 
   const fetchProducts = async () => {
     setLoading(true);
+    try {
+      const params = new URLSearchParams();
 
-    setProducts(
-      dummyProducts.filter((p) => p.category === category || category === ""),
-    );
+      if (category) params.set("category", category);
+      if (organic) params.set("organic", organic);
+      if (sort) params.set("sort", sort);
+      if (sort) params.set("sort", sort);
+      if (maxPrice) params.set("maxPrice", maxPrice);
 
-    setLoading(false);
+      params.set("page", String(page));
+      params.set("limit", "12");
+
+      const { data } = await api.get(`/products?${params.toString()}`);
+
+      setProducts(data.products);
+      setTotalPages(data.pages);
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message || error?.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const updateFilter = (key: string, value: string) => {
@@ -170,7 +187,7 @@ const Products = () => {
                 {products.map(
                   (product) =>
                     product.stock > 0 && (
-                      <ProductCard key={product._id} product={product} />
+                      <ProductCard key={product.id} product={product} />
                     ),
                 )}
               </div>

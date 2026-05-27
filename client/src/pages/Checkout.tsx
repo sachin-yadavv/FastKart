@@ -3,7 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { dummyAddressData } from "../assets/assets";
 import type { Address } from "../types";
 import { useCart } from "../context/CardContext";
-import { ArrowLeft, CheckIcon, ChevronRightIcon, CreditCardIcon, MapPinIcon } from "lucide-react";
+import {
+  ArrowLeft,
+  CheckIcon,
+  ChevronRightIcon,
+  CreditCardIcon,
+  MapPinIcon,
+} from "lucide-react";
 import CheckoutAddress from "../components/Checkout/CheckoutAddress";
 import CheckoutPayment from "../components/Checkout/CheckoutPayment";
 import CheckoutReview from "../components/Checkout/CheckoutReview";
@@ -19,7 +25,7 @@ const Checkout = () => {
   const [loading, setLoading] = useState(false);
 
   const [address, setAddress] = useState<Address>({
-    _id: "",
+    id: "",
     label: "Home",
     address: "",
     city: "",
@@ -58,7 +64,7 @@ const Checkout = () => {
         user.addresses.find((a) => a.isDefault) || user.addresses[0];
 
       setAddress({
-        _id: defaultAddr?._id,
+        id: defaultAddr?.id,
         label: defaultAddr?.label,
         address: defaultAddr?.address,
         city: defaultAddr?.city,
