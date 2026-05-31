@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { dummyAddressData } from "../assets/assets";
 import type { Address } from "../types";
 import { useCart } from "../context/CardContext";
 import {
@@ -68,7 +67,7 @@ const Checkout = () => {
       paymentMethod,
     };
 
-    const { data } = await api.post('/orders', orderData);
+    const { data } = await api.post("/orders", orderData);
     console.log(data);
 
     if (data.url) {
