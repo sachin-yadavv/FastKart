@@ -19,6 +19,7 @@ import Loading from "../components/Loading";
 import DummyReviewsSection from "../assets/DummyReviewsSection";
 import ProductCard from "../components/Home/ProductCard";
 import { useCart } from "../context/CardContext";
+import api from "../config/api";
 
 const ProductPage = () => {
   const currency = import.meta.env.VITE_CURRENCY_SYMBOL || "$";
@@ -44,22 +45,17 @@ const ProductPage = () => {
 
     window.scrollTo(0, 0);
 
-    const foundProduct = dummyProducts.find((p) => p.id === id);
+    api.get(`/products/${id}`).then(({ data }) => {
+  setProduct(data.product);
 
-    if (!foundProduct) {
-      setLoading(false);
-      return;
-    }
+  return api.get(`/products?category=${data.product.category}`);
+}).then(({ data }) => {
+  setRelatedProducts(
+    data.products.filter((p: Product) => p.id !== id)
+  );
+}).catch(() => navigate("/products"))
+  .finally(() => setLoading(false));
 
-    setProduct(foundProduct);
-
-    setRelatedProducts(
-      dummyProducts.filter(
-        (p) => p.category === foundProduct.category && p.id !== foundProduct.id,
-      ),
-    );
-
-    setLoading(false);
   }, [id, navigate]);
 
   if (loading) return <Loading />;
