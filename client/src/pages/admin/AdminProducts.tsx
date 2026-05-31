@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import { PlusIcon, EditIcon, XIcon } from "lucide-react";
 import type { Product } from "../../types";
 import Loading from "../../components/Loading";
-import { dummyProducts } from "../../assets/assets";
+// import { toast } from "react-hot-toast/headless";
+import { toast } from "react-hot-toast";
+import api from "../../config/api";
 
 export default function AdminProducts() {
   const currency = import.meta.env.VITE_CURRENCY_SYMBOL || "$";
@@ -12,11 +14,18 @@ export default function AdminProducts() {
   const [loading, setLoading] = useState(true);
 
   const fetchProducts = async () => {
-    setProducts(dummyProducts);
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  };
+  try {
+    const { data } = await api.get("/products");
+
+    setProducts(data.products);
+  } catch (error: any) {
+    toast.error(
+      error.response?.data?.message || error?.message
+    );
+  } finally {
+    setLoading(false);
+  }
+};
 
   useEffect(() => {
     fetchProducts();
@@ -25,11 +34,20 @@ export default function AdminProducts() {
   const handleMarkOutOfStock = async (id: string, name: string) => {
     if (
       !window.confirm(
-        `Are you sure you want to mark "${name}" as out of stock?`,
+        `Are you sure you want to mark "${name}" as out of stock?`
       )
-    )
-      return;
-    console.log(id);
+    ) return;
+    
+    try {
+      await api.delete(`/products/${id}`);
+      toast.success("product marked as out of stock");
+      fetchProducts();
+    } catch (error: any) {
+      toast.error(
+        error.response?.data?.message || "failed to update product stock status"
+      );
+    }
+
   };
 
   if (loading) return <Loading />;
