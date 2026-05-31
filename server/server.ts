@@ -21,7 +21,7 @@ app.use(express.json());
 const port = process.env.PORT || 5000;
 
 app.get('/', (req: Request, res: Response) => {
-    res.send('Server is Live!');
+    res.send('Server is skdxnfhgfxhc!');
 });
 
 app.use('/api/auth', authRouter);
