@@ -1,17 +1,14 @@
 import {
   ArrowUpRightIcon,
   BikeIcon,
-  ChevronDown,
   ChevronDownIcon,
   LogOutIcon,
   MapPinIcon,
   Menu,
   PackageIcon,
-  Search,
   SearchIcon,
   ShieldIcon,
   ShoppingCartIcon,
-  User,
   UserIcon,
   XIcon,
 } from "lucide-react";
