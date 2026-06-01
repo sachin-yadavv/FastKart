@@ -14,7 +14,6 @@ import { useEffect, useState } from "react";
 
 import type { Product } from "../types";
 
-import { dummyProducts } from "../assets/assets";
 import Loading from "../components/Loading";
 import DummyReviewsSection from "../assets/DummyReviewsSection";
 import ProductCard from "../components/Home/ProductCard";
