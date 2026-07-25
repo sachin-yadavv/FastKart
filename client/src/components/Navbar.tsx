@@ -16,6 +16,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CardContext";
 import { useAuth } from "../context/AuthContext";
+import VoiceSearchButton from "./VoiceSearchButton";
 const Navbar = () => {
   const {user,logout} = useAuth();
   const { cartCount, setIsCartOpen } = useCart();
@@ -84,6 +85,9 @@ const Navbar = () => {
               />
             </div>
           </form>
+
+          {/* Voice search mic */}
+          <VoiceSearchButton />
 
           {/* right actions */}
           <div className="flex items-center gap-3">

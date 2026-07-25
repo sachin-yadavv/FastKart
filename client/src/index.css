@@ -128,3 +128,20 @@ input:focus {
 .animate-pulse-soft {
     animation: pulse-soft 2s ease-in-out infinite;
 }
+
+/* Voice search ripple */
+@keyframes voice-ripple {
+    0% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(2);
+    }
+}
+
+.animate-voice-ripple {
+    animation: voice-ripple 1.2s ease-out infinite;
+}
